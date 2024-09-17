@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ministry of Jal Shakti</title>
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            background-color: #f0f0f0;
+            overflow-x: hidden;
+            /* Prevents horizontal scroll */
+        }
+
+        /* Header */
+        header {
+            background-color: #004c8c;
+            color: #fff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+        }
+
+        /* Nav Links */
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1rem;
+        }
+
+        nav ul li {
+            display: inline-block;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ffd700;
+        }
+
+        /* Hamburger Menu */
+        #hamburger {
+            display: none;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        /* Mobile Menu */
+        nav ul {
+            display: flex;
+        }
+
+        nav ul.show {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background-color: #004c8c;
+            padding: 1rem;
+            width: 100%;
+            height: auto;
+        }
+
+        /* Hero Section */
+        .hero {
+            background-color: #d2d0d0;
+            color: #fff;
+            text-align: center;
+            padding: 4rem 2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .hero button {
+            background-color: #ffd700;
+            color: #333;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+        }
+
+        .hero button:hover {
+            background-color: #ffcc00;
+        }
+
+        /* Section */
+        section {
+            padding: 4rem 2rem;
+        }
+
+        section h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        /* About Section */
+        #about {
+            background-color: #fff;
+        }
+
+        #about p {
+            text-align: center;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Services Section */
+        #services {
+            background-color: #e0e0e0;
+        }
+
+        .services-container {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .service {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            flex: 1 1 250px;
+            margin: 1rem;
+        }
+
+        .service h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Contact Section */
+        #contact {
+            background-color: #004c8c;
+            color: #fff;
+            text-align: center;
+        }
+
+        #contact p {
+            font-size: 1.2rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        /* Media Queries for Mobile */
+        @media (max-width: 768px) {
+            #hamburger {
+                display: block;
+            }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+            }
+
+            nav ul.show {
+                display: flex;
+            }
+        }
+
+        /* Carousel Container */
+        .carousel-container {
+            position: relative;
+            max-width: 100%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        .carousel-slide {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            max-width: 100%;
+            /* Prevent overflow */
+        }
+
+        .carousel-slide img {
+            width: 100vw;
+            /* Ensures it doesn't go beyond the viewport width */
+            height: 80vh;
+            object-fit: fill;
+        }
+
+        /* Previous and Next buttons */
+        .prev,
+        .next {
+            position: absolute;
+            top: 50%;
+            padding: 10px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+
+        /* Dots/Indicators */
+        .carousel-dots {
+            text-align: center;
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+        }
+
+        .dot {
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+            margin: 0 5px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+
+        .dot.active {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div>
+            <h1>Ministry of Jal Shakti</h1>
+        </div>
+        <nav>
+            <ul id="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div id="hamburger">&#9776;</div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="carousel-container">
+            <div class="carousel-slide">
+                <img src="https://cbpssubscriber.mygov.in/assets/uploads/juGajmc1gOVBUtt5?76"
+                    alt="Empowering India's Water Resources">
+                <img src="https://cdnbbsr.s3waas.gov.in/s3a70dc40477bc2adceef4d2c90f47eb82/uploads/2024/07/20240709254804854.jpg"
+                    alt="Groundwater Quality">
+                <img src="https://cdnbbsr.s3waas.gov.in/s3a70dc40477bc2adceef4d2c90f47eb82/uploads/2023/04/2023042578.jpg"
+                    alt="Water Management Practices">
+            </div>
+            <!-- Previous and Next Buttons -->
+            <a class="prev" onclick="moveSlide(-1)">&#10094;</a>
+            <a class="next" onclick="moveSlide(1)">&#10095;</a>
+        </div>
+        <div class="carousel-dots">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h3>About Us</h3>
+        <p>The Ministry of Jal Shakti is committed to improving water management practices, ensuring the sustainable use
+            of groundwater resources, and addressing water-related issues across India. Our initiatives include
+            monitoring water quality, promoting water conservation, and empowering communities to manage their water
+            resources efficiently.</p>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services">
+        <h3>Our Services</h3>
+        <div class="services-container">
+            <div class="service">
+                <h4>Water Conservation</h4>
+                <p>Our water conservation programs are designed to help communities adopt sustainable water management
+                    practices and conserve precious resources for future generations.</p>
+            </div>
+            <div class="service">
+                <h4>Groundwater Monitoring</h4>
+                <p>We monitor groundwater levels and quality to ensure safe and sustainable use of this critical
+                    resource.</p>
+            </div>
+            <div class="service">
+                <h4>Water Quality Testing</h4>
+                <p>We provide testing services to assess the quality of drinking water, ensuring safe and clean water
+                    for
+                    all.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h3>Contact Us</h3>
+        <p>Get in touch with the Ministry of Jal Shakti for more information on our services and initiatives.</p>
+        <p>Email: info@jalshakti.gov.in</p>
+        <p>Phone: +91-11-12345678</p>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Ministry of Jal Shakti. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        let slideIndex = 0;
+        const slides = document.querySelector('.carousel-slide').children;
+        const dots = document.querySelectorAll('.dot');
+
+        function moveSlide(n) {
+            slideIndex += n;
+            if (slideIndex >= slides.length) {
+                slideIndex = 0;
+            } else if (slideIndex < 0) {
+                slideIndex = slides.length - 1;
+            }
+            updateCarousel();
+        }
+
+        function currentSlide(n) {
+            slideIndex = n - 1;
+            updateCarousel();
+        }
+
+        function updateCarousel() {
+            const width = slides[0].clientWidth;
+            document.querySelector('.carousel-slide').style.transform = `translateX(-${slideIndex * width}px)`;
+
+            dots.forEach((dot, index) => {
+                dot.classList.remove('active');
+                if (index === slideIndex) {
+                    dot.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('resize', updateCarousel);
+    </script>
+
+    <script src="https://cdn.botpress.cloud/webchat/v2.1/inject.js"></script>
+    <script
+        src="https://mediafiles.botpress.cloud/7eca4dc0-c27a-4bf1-a4be-6595568982b7/webchat/v2.1/config.js"></script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ministry of Jal Shakti</title>
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            background-color: #f0f0f0;
+        }
+
+        /* Header */
+        header {
+            background-color: #004c8c;
+            color: #fff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+        }
+
+        header nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1rem;
+        }
+
+        header nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        header nav a:hover {
+            color: #ffd700;
+        }
+
+        /* Hero Section */
+        .hero {
+            background-color: #004c8c;
+            color: #fff;
+            text-align: center;
+            padding: 4rem 2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .hero button {
+            background-color: #ffd700;
+            color: #333;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+        }
+
+        .hero button:hover {
+            background-color: #ffcc00;
+        }
+
+        /* Section */
+        section {
+            padding: 4rem 2rem;
+        }
+
+        section h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        /* About Section */
+        #about {
+            background-color: #fff;
+        }
+
+        #about p {
+            text-align: center;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Services Section */
+        #services {
+            background-color: #e0e0e0;
+        }
+
+        .services-container {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .service {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            flex: 1 1 250px;
+            margin: 1rem;
+        }
+
+        .service h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Contact Section */
+        #contact {
+            background-color: #004c8c;
+            color: #fff;
+            text-align: center;
+        }
+
+        #contact p {
+            font-size: 1.2rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+        }
+
+        /* Chatbot */
+        .bp-webchat {
+            transform: scale(1);
+            transform-origin: 0 0;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .bp-webchat * {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .bp-webchat img {
+            image-rendering: -webkit-optimize-contrast;
+        }
+
+        .bp-webchat canvas {
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+        }
+    </style>
+</head>
+
+<body>
+   
+    <header>
+        <div style="flex: auto;">
+            <h1>Ministry of Jal Shakti</h1>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+   
+    <section id="home" class="hero">
+        <div>
+            <h2>Empowering India’s Water Resources</h2>
+            <p>Your gateway to information on groundwater levels, quality, and more. Get insights and support from our dedicated chatbot.</p>
+            <button id="open-chat">Chat with Us</button>
+        </div>
+    </section>
+
+   
+    <section id="about">
+        <h3>About Us</h3>
+        <p>The Ministry of Jal Shakti is committed to improving water management practices, ensuring the sustainable use of groundwater resources, and addressing water-related issues across India. Our initiatives include monitoring water levels, ensuring water quality, and providing guidance on groundwater extraction and management.</p>
+    </section>
+
+ 
+    <section id="services">
+        <h3>Our Services</h3>
+        <div class="services-container">
+            <div class="service">
+                <h4>Groundwater Assessment</h4>
+                <p>Comprehensive evaluation of groundwater resources and their management.</p>
+            </div>
+            <div class="service">
+                <h4>Water Quality Analysis</h4>
+                <p>Ensuring the safety and quality of water through rigorous testing.</p>
+            </div>
+            <div class="service">
+                <h4>Guidance and Training</h4>
+                <p>Providing expert advice and training on groundwater management practices.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h3>Contact Us</h3>
+        <p>For any inquiries or assistance, please reach out to us. We are here to help you with all your groundwater-related questions and concerns.</p>
+    </section>
+
+    
+    <footer>
+        <p>&copy; 2024 Ministry of Jal Shakti. All Rights Reserved.</p>
+    </footer>
+
+   
+    <script src="https://cdn.botpress.cloud/webchat/v2.1/inject.js"></script>
+    <script src="https://mediafiles.botpress.cloud/7eca4dc0-c27a-4bf1-a4be-6595568982b7/webchat/v2.1/config.js"></script>
+    <script>
+        window.botpressWebChat.init({
+            host: 'https://your-botpress-instance-url', // Replace with your Botpress instance URL
+            botId: 'your-bot-id', // Replace with your Bot ID
+        });
+
+        // Show chatbot on button click
+        document.getElementById('open-chat').addEventListener('click', function () {
+            window.botpressWebChat.show();
+        });
+    </script>
+</body>
+
+</html>
+
+-->
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* Inline styles to ensure the chatbot is displayed correctly */
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Hide scrollbars if necessary */
+            height: 100vh; /* Ensure the body takes up full viewport height */
+            width: 100vw; /* Ensure the body takes up full viewport width */
+        }
+        .bp-webchat {
+            height: 100vh; /* Make chatbot take full viewport height */
+            width: 100vw;  /* Make chatbot take full viewport width */
+            position: fixed; /* Ensure the chatbot is fixed in place */
+            bottom: 0; /* Position at the bottom of the viewport */
+            left: 0; /* Position at the left of the viewport */
+            z-index: 9999; /* Ensure it is above other content */
+        }
+    </style>
+</head>
+<body>
+    <script src="https://cdn.botpress.cloud/webchat/v2.1/inject.js"></script>
+    <script src="https://mediafiles.botpress.cloud/7eca4dc0-c27a-4bf1-a4be-6595568982b7/webchat/v2.1/config.js"></script>
+</body>
+</html> -->
